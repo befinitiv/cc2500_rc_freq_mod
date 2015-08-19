@@ -1,0 +1,8 @@
+This project patches into a CC2500 based RC system with the goal of changing its frequency spectrum.
+
+Current 2.4GHz RC use the full spectrum from 2405-2485MHz with FHSS. Since they occupy the whole 2.4GHz ISM band there is no more room for video transmission for FPV applications in that band.
+
+The idea behind this project is to add a CPLD in between the data line going from a processor to the CC2500. The CPLD monitors the data line for writes to the CHANNEL register. If a write is detected, the data line will be zeroed in the upper bits to limit the upper hopping frequency.
+
+This could also be done by modifying the software that runs on the processor connected to the CC2500. However, this would need to reverse engineer the firmware encryption and the firmware itself. This would be needed for transmitter and receiver, for each manufacturer and each software revision. 
+Although the CPLD approach requires hardware modifications it is software agnostic and can be applied to all CC2500 based RC systems.
