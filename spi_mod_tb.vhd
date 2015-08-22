@@ -26,17 +26,18 @@ end component;
 	signal sm_dout : std_logic;
 
 
-	procedure send_byte(variable b : in std_logic_vector(7 downto 0); variable sck, d : out std_logic) is
+	procedure send_byte(constant b : in std_logic_vector(7 downto 0); signal sck, d : out std_logic) is
 	begin
 		for i in 7 downto 0 loop
-			sck := '0';
-			d := b(i);
+			sck <= '0';
+			d <= b(i);
 			wait for 1 us;
-			sck := '1';
+			sck <= '1';
 			wait for 1 us;
 		end loop;
 
-		sck := '0';
+		sck <= '0';
+	end procedure;
 
 begin
 
@@ -51,7 +52,7 @@ port map(
 );
 
 	
-	stim_process :process
+	stim_process : process
 	begin
 		sm_csn <= '1';
 		sm_sck <= '0';
@@ -61,9 +62,9 @@ port map(
 		sm_csn <= '0';
 		wait for 1 us;
 
-		send_byte("00101101", sm_sck, sm_din);
+		send_byte(x"0A", sm_sck, sm_din);
 		wait for 5 us;
-		send_byte("01110111", sm_sck, sm_din);
+		send_byte("11110111", sm_sck, sm_din);
 	
 		wait for 10 us;
 		sm_csn <= '1';
