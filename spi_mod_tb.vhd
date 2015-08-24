@@ -15,7 +15,8 @@ component spi_mod
 		CSN : in std_logic;
 		SCK : in std_logic;
 		DIN : in std_logic;
-		DOUT : out std_logic
+		DOUT : out std_logic;
+		DEBUG : out std_logic
 	);
 end component;
 

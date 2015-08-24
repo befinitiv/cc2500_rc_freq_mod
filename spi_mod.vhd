@@ -13,8 +13,9 @@ entity spi_mod is
 		CSN : in std_logic;
 		SCK : in std_logic;
 		DIN : in std_logic;
-		DOUT : out std_logic
-	);
+		DOUT : out std_logic;
+		DEBUG : out std_logic
+);
 end spi_mod;
 
 architecture Behavioral of spi_mod is
@@ -30,8 +31,12 @@ signal sr_cnt : integer range 0 to 15;
 begin
     
 
+DEBUG <= overwrite_enable_re;
+
+
 overwrite_value <= '0';
 DOUT <= overwrite_value when overwrite_enable_fe = '1' else DIN;
+
 
 
 
