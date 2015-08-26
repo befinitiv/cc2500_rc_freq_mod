@@ -1,0 +1,11 @@
+
+#PINLOCK_BEGIN
+
+#Wed Aug 26 18:50:13 2015
+
+NET "CSN"            LOC =  "S:PIN33";
+NET "DIN"            LOC =  "S:PIN13";
+NET "SCK"            LOC =  "S:PIN43";
+NET "DOUT"           LOC =  "S:PIN38";
+NET "DEBUG"          LOC =  "S:PIN41";
+#PINLOCK_END
