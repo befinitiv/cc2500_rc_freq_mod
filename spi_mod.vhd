@@ -67,7 +67,9 @@ begin
 				overwrite_enable_re <= '1';
 			end if;
 
-			if sr_cnt <= 8 then
+			if sr_cnt = 15 then
+				sr_cnt <= 0;
+			else
 				sr_cnt <= sr_cnt + 1;
 			end if;
 			

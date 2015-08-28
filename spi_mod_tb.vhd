@@ -62,6 +62,13 @@ port map(
 		wait for 10 us;
 		sm_csn <= '0';
 		wait for 1 us;
+		
+		--this sequence is a write to another register with the value 0xa.
+		--this is to see if the circuit ignores this write.
+		send_byte(x"CA", sm_sck, sm_din);
+		wait for 5 us;
+		send_byte(x"0A", sm_sck, sm_din);
+		wait for 5 us;
 
 		send_byte(x"0A", sm_sck, sm_din);
 		wait for 5 us;
