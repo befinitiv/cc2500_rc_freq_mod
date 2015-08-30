@@ -27,6 +27,7 @@ signal overwrite_value : std_logic;
 signal sr : std_logic_vector(8-1 downto 0);
 signal sr_cnt : integer range 0 to 15;
 
+signal burst_disable : std_logic;
 
 begin
     
@@ -54,23 +55,32 @@ begin
 	if CSN = '1' then
 		overwrite_enable_re <= '0';
 		sr_cnt <= 0;
+		burst_disable <= '0';
 	else
 		if rising_edge(SCK) then
-			sr(0) <= DIN;
-			for i in 1 to 7 loop
-				sr(i) <= sr(i-1);
-			end loop;
-			
+			if burst_disable = '0' then
+				sr(0) <= DIN;
+				for i in 1 to 7 loop
+					sr(i) <= sr(i-1);
+				end loop;
+				
 
-			overwrite_enable_re <= '0';
-			if sr_cnt = 7 and sr(6 downto 0) = x"05" and DIN = '0' then
-				overwrite_enable_re <= '1';
-			end if;
+				overwrite_enable_re <= '0';
+				if sr_cnt = 7 then
+					if sr(6 downto 0) = x"05" and DIN = '0' then
+						overwrite_enable_re <= '1';
+					end if;
+					
+					if sr(6 downto 0) = "0111111" and DIN = '1' then
+						burst_disable <= '1';
+					end if;
+				end if;
 
-			if sr_cnt = 15 then
-				sr_cnt <= 0;
-			else
-				sr_cnt <= sr_cnt + 1;
+				if sr_cnt = 15 then
+					sr_cnt <= 0;
+				else
+					sr_cnt <= sr_cnt + 1;
+				end if;
 			end if;
 			
 		end if;

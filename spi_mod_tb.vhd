@@ -74,6 +74,14 @@ port map(
 		wait for 5 us;
 		send_byte("11110111", sm_sck, sm_din);
 	
+		send_byte(x"7F", sm_sck, sm_din);
+		wait for 5 us;
+		send_byte(x"12", sm_sck, sm_din);
+		wait for 5 us;
+		send_byte(x"0A", sm_sck, sm_din);		
+		wait for 5 us;
+		send_byte(x"76", sm_sck, sm_din);
+
 		wait for 10 us;
 		sm_csn <= '1';
 
